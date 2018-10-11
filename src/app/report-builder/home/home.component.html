@@ -1,0 +1,43 @@
+<h1>Home </h1>
+<div id="container" class="container">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+  <div *ngFor="let control of form.controls | keys">
+    <h4>{{control}}</h4>
+
+    <div formGroupName="{{control}}" class="form-group">
+
+      <div *ngFor="let subControl of form.controls[control].controls | keys">
+        
+        <div *ngIf="subControl !=='sijainti';else sijaintiInput">
+          <label for="{{subControl}}">{{subControl}}</label>
+          <input type="text" formControlName="{{subControl}}" class="form-control">
+        </div>
+        
+        <ng-template #sijaintiInput>
+            <label for="{{subControl}}">{{subControl}}</label>
+            <select  formControlName="{{subControl}}" >
+              <option value=""></option>
+              <option value="alakerta">Alakerta</option>
+              <option value="ylakerta">Yläkerta</option>
+            </select>
+        </ng-template>
+    
+
+      </div>
+      <br>
+      <hr>
+    </div>
+
+  </div>
+
+
+  <button type="submit" [disabled]="!form.valid">Submit</button>
+</form>
+
+</div>
+<div id="report-view">
+
+<rb-report-view [formData]="report"></rb-report-view>
+</div>
